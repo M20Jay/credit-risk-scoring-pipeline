@@ -1,0 +1,9 @@
+data/
+*.zip
+*.csv
+*.pkl
+*.env
+--pycache__/
+.DS_store
+venv/
+*ipynb_checkpoints
