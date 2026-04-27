@@ -28,13 +28,24 @@ This API answers all three in one call — with SHAP explainability for every de
 
 | Day | Task | Status |
 |-----|------|--------|
-| Day 1 | EDA — loan.csv, target variable, distributions | ⏳ |
+| Day 1 | EDA — loan.csv, target variable, distributions | ✅ Complete |
 | Day 2 | XGBoost credit risk model + calibration | ⏳ |
 | Day 3 | SHAP explainability — summary, waterfall, force plots | ⏳ |
 | Day 4 | Propensity scoring + RFM segmentation + DVC | ⏳ |
 | Day 5 | FastAPI endpoints + PostgreSQL predictions storage | ⏳ |
 | Day 6 | Grafana dashboard + Docker + deployment | ⏳ |
 | Day 7 | README complete + LinkedIn post + GitHub pushed | ⏳ |
+
+## Day 1 Key Findings
+
+| Finding | Detail |
+|---------|--------|
+| Total dataset | 887,379 loans — 74 features |
+| Modelling dataset | 252,971 loans — Fully Paid and Charged Off only |
+| Default rate | 17.9% — moderate class imbalance |
+| Strongest predictor | Loan grade — A=5% default, G=42% default |
+| File format | Converted CSV 421MB → Parquet 36MB — 11x smaller |
+| New features | dti_clean · credit_history_years · loan_to_income |
 
 ---
 
