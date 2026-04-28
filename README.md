@@ -29,8 +29,8 @@ This API answers all three in one call — with SHAP explainability for every de
 | Day | Task | Status |
 |-----|------|--------|
 | Day 1 | EDA — loan.csv, target variable, distributions | ✅ Complete |
-| Day 2 | XGBoost credit risk model + calibration | ⏳ |
-| Day 3 | SHAP explainability — summary, waterfall, force plots | ⏳ |
+| Day 2 | XGBoost model + calibration + optimal threshold | ✅ Complete |
+| Day 3 | SHAP explainability + src/ modular structure | ⏳ |
 | Day 4 | Propensity scoring + RFM segmentation + DVC | ⏳ |
 | Day 5 | FastAPI endpoints + PostgreSQL predictions storage | ⏳ |
 | Day 6 | Grafana dashboard + Docker + deployment | ⏳ |
@@ -48,7 +48,19 @@ This API answers all three in one call — with SHAP explainability for every de
 | New features | dti_clean · credit_history_years · loan_to_income |
 
 ---
+## Day 2 Key Findings
 
+| Metric | Result |
+|--------|--------|
+| Best model | XGBoost — ROC-AUC 0.701 |
+| Optimal threshold | 0.187 — business driven |
+| Recall on defaulters | 65% — met requirement |
+| False negatives | 3,164 missed defaulters |
+| False positives | 14,760 wrongly declined |
+| Model saved | models/credit_risk_model.pkl |
+| Next improvement | Better features + ADASYN |
+
+---
 ## Stack
 
 | Tool | Purpose |
