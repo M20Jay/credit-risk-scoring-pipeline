@@ -1,0 +1,47 @@
+# Model Configuration — Credit Risk Scoring Pipeline
+# Model Configuration — Credit Risk Scoring Pipeline
+# All hyperparameters and settings in one place
+# Change here — changes everywhere
+
+model:
+  name: XGBoost
+  params:
+    n_estimators: 100
+    max_depth: 4
+    learning_rate: 0.1
+    scale_pos_weight: 5
+    random_state: 42
+    verbosity: 0
+
+training:
+  test_size: 0.2
+  val_size: 0.25
+  random_state: 42
+  target_recall: 0.65
+
+features:
+  numerical:
+    - loan_amnt
+    - int_rate
+    - installment
+    - annual_inc
+    - dti_clean
+    - delinq_2yrs
+    - inq_last_6mths
+    - open_acc
+    - pub_rec
+    - revol_bal
+    - revol_util
+    - total_acc
+    - credit_history_years
+    - loan_to_income
+  categorical:
+    - grade
+    - purpose
+    - home_ownership
+  target: default
+
+paths:
+  data: data/loan/loan_filtered.parquet
+  model: models/credit_risk_model.pkl
+  threshold: models/optimal_threshold.pkl
