@@ -13,7 +13,9 @@ from imblearn.over_sampling import ADASYN
 import xgboost as xgb
 from sklearn.impute import SimpleImputer
 from src.data.preprocessing import load_config, preprocess
-from src.features.feauture_engineering import(build_features,get_feature_columns)
+from src.features.feature_engineering import (
+    build_features, get_feature_columns
+)
 
 # Main training function
 def split_data(df, features,config):
