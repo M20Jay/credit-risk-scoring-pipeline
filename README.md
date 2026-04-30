@@ -29,12 +29,12 @@ This API answers all three in one call — with SHAP explainability for every de
 | Day | Task | Status |
 |-----|------|--------|
 | Day 1 | EDA — loan.csv, target variable, distributions | ✅ Complete |
-| Day 2 | XGBoost model + calibration + optimal threshold | ✅ Complete |
-| Day 3 | SHAP explainability + src/ modular structure | ⏳ |
-| Day 4 | Propensity scoring + RFM segmentation + DVC | ⏳ |
-| Day 5 | FastAPI endpoints + PostgreSQL predictions storage | ⏳ |
-| Day 6 | Grafana dashboard + Docker + deployment | ⏳ |
-| Day 7 | README complete + LinkedIn post + GitHub pushed | ⏳ |
+| Day 2 | XGBoost + calibration + ADASYN + threshold | ✅ Complete |
+| Day 3 | src/ modular structure + SHAP explainability | ✅ Complete |
+| Day 4 | Propensity scoring + RFM segmentation + DVC | ⏳ Tomorrow |
+| Day 5 | FastAPI endpoints + PostgreSQL | ⏳ |
+| Day 6 | Grafana + Docker + deployment | ⏳ |
+| Day 7 | README complete + LinkedIn post | ⏳ |
 
 ## Day 1 Key Findings
 
@@ -53,12 +53,25 @@ This API answers all three in one call — with SHAP explainability for every de
 | Metric | Result |
 |--------|--------|
 | Best model | XGBoost — ROC-AUC 0.701 |
-| Optimal threshold | 0.187 — business driven |
+| Optimal threshold | 0.183 — business driven |
 | Recall on defaulters | 65% — met requirement |
 | False negatives | 3,164 missed defaulters |
 | False positives | 14,760 wrongly declined |
+| ADASYN applied | 27,149 → 135,353 minority samples |
 | Model saved | models/credit_risk_model.pkl |
-| Next improvement | Better features + ADASYN |
+
+---
+
+## Day 3 Key Findings
+
+| Item | Detail |
+|------|--------|
+| Structure | Modular src/ — preprocessing, features, models |
+| ADASYN | Balanced 27,149 → 135,353 minority samples |
+| SHAP | Summary and waterfall plots generated |
+| ROC-AUC | 0.703 on held-out test set |
+| Threshold | 0.183 — business driven |
+| Screenshots | confusion_matrix, shap_summary, shap_waterfall |
 
 ---
 ## Stack
