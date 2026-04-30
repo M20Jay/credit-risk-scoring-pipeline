@@ -8,4 +8,4 @@ data/
 *.pkl
 *.env
 venv/
-*.ipynb_checkpoints
+*.ipynb_checkpointss
