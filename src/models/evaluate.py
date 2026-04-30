@@ -56,16 +56,22 @@ def plot_confusion_matrix(y_test, y_pred):
 # SHAP functions
 def generate_shap_plots(model, X_test, features):
     """Generate SHAP summary and waterfall plots"""
-    base_model = model.calibrated_classifiers_[0].estimator
     
-    # Use Explainer instead of TreeExplainer
-    explainer = shap.Explainer(base_model, X_test[:100])
-    shap_values = explainer(X_test[:100])
+    # Extract booster directly — faster than Explainer
+    base_model = model.calibrated_classifiers_[0].estimator
+    booster = base_model.get_booster()
+    
+    # Use small sample for speed
+    X_sample = X_test[:100]
+    
+    explainer = shap.TreeExplainer(booster)
+    shap_values = explainer.shap_values(X_sample)
 
     # Summary plot
     plt.figure(figsize=(10, 6))
     shap.summary_plot(
-        shap_values.values, X_test[:100],
+        shap_values,
+        X_sample,
         feature_names=features,
         show=False
     )
@@ -74,6 +80,23 @@ def generate_shap_plots(model, X_test, features):
                 dpi=150, bbox_inches='tight')
     plt.close()
     print("SHAP summary plot saved ✅")
+
+    # Waterfall plot — first customer
+    plt.figure(figsize=(10, 6))
+    shap.plots.waterfall(
+        shap.Explanation(
+            values=shap_values[0],
+            base_values=explainer.expected_value,
+            data=X_sample[0],
+            feature_names=features
+        ),
+        show=False
+    )
+    plt.tight_layout()
+    plt.savefig('screenshots/shap_waterfall.png',
+                dpi=150, bbox_inches='tight')
+    plt.close()
+    print("SHAP waterfall plot saved ✅")
 
 # Final evaluate pipeline function
 def evaluate_pipeline():
