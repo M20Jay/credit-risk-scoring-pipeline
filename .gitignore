@@ -2,10 +2,9 @@ __pycache__/
 *.pyc
 *.pyo
 .DS_Store
-data/
 *.zip
 *.csv
 *.pkl
 *.env
 venv/
-*.ipynb_checkpointss
+*.ipynb_checkpoints

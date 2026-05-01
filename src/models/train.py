@@ -13,8 +13,10 @@ from imblearn.over_sampling import ADASYN
 import xgboost as xgb
 from sklearn.impute import SimpleImputer
 from src.data.preprocessing import load_config, preprocess
+from sklearn.impute import SimpleImputer
 from src.features.feature_engineering import (
-    build_features, get_feature_columns
+    build_features, get_feature_columns,
+    build_rfm_features, assign_rfm_segment
 )
 
 # Main training function
@@ -44,8 +46,6 @@ def split_data(df, features,config):
 
 def apply_adasyn(X_train, y_train):
     """Apply ADASYN on training set only"""
-    from sklearn.impute import SimpleImputer
-
     imputer = SimpleImputer(strategy='median')
     X_train_imputed = imputer.fit_transform(X_train)
 
@@ -100,6 +100,17 @@ def save_artifacts(model, threshold, imputer, config):
     print("Threshold saved ✅")
     print("Imputer saved ✅")
 
+def compute_propensity(model, X, imputer):
+    """
+    Compute propensity score for each customer.
+    Propensity = probability customer will
+    accept a loan offer.
+    Low default risk = high loan propensity.
+    """
+    X_imputed = imputer.transform(X)
+    default_prob = model.predict_proba(X_imputed)[:, 1]
+    propensity_score = 1 - default_prob
+    return propensity_score
 
 def train_pipeline():
     """Full training pipeline"""
@@ -120,6 +131,9 @@ def train_pipeline():
     threshold = find_threshold(calibrated, X_test, y_test, config)
     save_artifacts(calibrated, threshold, imputer, config)
     print("Training pipeline complete ✅")
+    propensity = compute_propensity(calibrated, X_test, imputer)
+    print(f"Propensity scores computed ✅")
+    print(f"Mean propensity: {propensity.mean().round(3)}")
 
 
 if __name__ == '__main__':

@@ -1,0 +1,5 @@
+outs:
+- md5: 9ee53008b01badb9c3ea3db6e24614c5
+  size: 1011219
+  hash: md5
+  path: credit_risk_model.pkl
