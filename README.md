@@ -31,9 +31,9 @@ This API answers all three in one call — with SHAP explainability for every de
 | Day 1 | EDA — loan.csv, target variable, distributions | ✅ Complete |
 | Day 2 | XGBoost + calibration + ADASYN + threshold | ✅ Complete |
 | Day 3 | src/ modular structure + SHAP explainability | ✅ Complete |
-| Day 4 | Propensity scoring + RFM segmentation + DVC | ✅ Completemk |
-| Day 5 | FastAPI endpoints + PostgreSQL | ⏳ |
-| Day 6 | Grafana + Docker + deployment | ⏳ |
+| Day 4 | Propensity scoring + RFM segmentation + DVC | ✅ Complete |
+| Day 5 | FastAPI — /health, /assess, /segment endpoints | ✅ Complete |
+| Day 6 | Grafana + Docker + Render deployment | ⏳ |
 | Day 7 | README complete + LinkedIn post | ⏳ |
 
 ## Day 1 Key Findings
@@ -72,6 +72,30 @@ This API answers all three in one call — with SHAP explainability for every de
 | ROC-AUC | 0.703 on held-out test set |
 | Threshold | 0.183 — business driven |
 | Screenshots | confusion_matrix, shap_summary, shap_waterfall |
+
+---
+
+## Day 4 Key Findings
+
+| Item | Detail |
+|------|--------|
+| Propensity | Mean propensity score 0.821 on test set |
+| RFM | Proxy features — recency, frequency, monetary |
+| RFM Segments | Platinum, Gold, Silver, At Risk via KMeans |
+| DVC | Tracking models/ and data/ artifacts |
+| Limitation | RFM uses proxy features — no transaction history |
+
+---
+## Day 5 Key Findings
+
+| Item | Detail |
+|------|--------|
+| Endpoints | GET /health · POST /assess · POST /segment |
+| Structure | Modular — routes/ · schemas/ · utils.py |
+| Schemas | LoanApplication · AssessResponse · SegmentResponse |
+| utils.py | Shared feature engineering — DRY principle |
+| Docs | Auto-generated at /docs — Swagger UI |
+| Status | All endpoints tested and returning responses |
 
 ---
 ## Stack
