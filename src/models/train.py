@@ -90,15 +90,17 @@ def find_threshold(model, X_test, y_test, config):
     print(f"Optimal threshold: {optimal_threshold.round(3)}")
     return optimal_threshold
 
-def save_artifacts(model, threshold, imputer, config):
-    """Save all artifacts in one place"""
+def save_artifacts(model, threshold, imputer, config, feature_names):
+    """Save all artifacts"""
     os.makedirs('models', exist_ok=True)
     joblib.dump(model, config['paths']['model'])
     joblib.dump(threshold, config['paths']['threshold'])
     joblib.dump(imputer, 'models/imputer.pkl')
+    joblib.dump(feature_names, 'models/feature_names.pkl')
     print("Model saved ✅")
     print("Threshold saved ✅")
     print("Imputer saved ✅")
+    print("Feature names saved ✅")
 
 def compute_propensity(model, X, imputer):
     """
@@ -129,7 +131,7 @@ def train_pipeline():
     model = train_model(X_train, y_train, config)
     calibrated = calibrate_model(model, X_val, y_val)
     threshold = find_threshold(calibrated, X_test, y_test, config)
-    save_artifacts(calibrated, threshold, imputer, config)
+    save_artifacts(calibrated, threshold, imputer, config, features)
     print("Training pipeline complete ✅")
     propensity = compute_propensity(calibrated, X_test, imputer)
     print(f"Propensity scores computed ✅")

@@ -9,6 +9,7 @@ from api.routes import health, assess, segment
 model = joblib.load('models/credit_risk_model.pkl')
 threshold = joblib.load('models/optimal_threshold.pkl')
 imputer = joblib.load('models/imputer.pkl')
+feature_names = joblib.load('models/feature_names.pkl')
 
 # Create FastAPI app
 app = FastAPI(

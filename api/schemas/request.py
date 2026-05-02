@@ -15,3 +15,6 @@ class LoanApplication(BaseModel):
     total_acc: float
     earliest_cr_line: str
     issue_d: str
+    grade: str
+    purpose: str
+    home_ownership: str
