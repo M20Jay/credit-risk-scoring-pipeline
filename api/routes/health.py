@@ -9,7 +9,7 @@ router = APIRouter()
 def health():
     return HealthResponse(
         status="healthy",
-        model="XGBoost Credit Risk",
+        model="XGBoost Credit Risk v1.0",
         version="1.0.0",
         timestamp=datetime.now().isoformat()
     )

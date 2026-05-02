@@ -1,5 +1,5 @@
 # Request model — what the API expects
-from pydantic import BaseModel
+
 class LoanApplication(BaseModel):
     loan_amnt: float
     int_rate: float
