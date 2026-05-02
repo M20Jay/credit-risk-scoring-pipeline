@@ -31,7 +31,7 @@ This API answers all three in one call — with SHAP explainability for every de
 | Day 1 | EDA — loan.csv, target variable, distributions | ✅ Complete |
 | Day 2 | XGBoost + calibration + ADASYN + threshold | ✅ Complete |
 | Day 3 | src/ modular structure + SHAP explainability | ✅ Complete |
-| Day 4 | Propensity scoring + RFM segmentation + DVC | ⏳ Tomorrow |
+| Day 4 | Propensity scoring + RFM segmentation + DVC | ✅ Completemk |
 | Day 5 | FastAPI endpoints + PostgreSQL | ⏳ |
 | Day 6 | Grafana + Docker + deployment | ⏳ |
 | Day 7 | README complete + LinkedIn post | ⏳ |
