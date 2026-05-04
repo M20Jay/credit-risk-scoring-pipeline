@@ -35,6 +35,9 @@ def create_table():
                 propensity_score FLOAT,
                 recommendation VARCHAR(20),
                 threshold_used FLOAT,
+                rfm_recency FLOAT,
+                rfm_frequency FLOAT,
+                rfm_monetary FLOAT,
                 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
@@ -46,7 +49,7 @@ def create_table():
         print(f"Database not available: {e}")
 
 
-def save_prediction(application, response):
+def save_prediction(application, response, rfm=None):
     """Save prediction to PostgreSQL"""
     try:
         conn = get_connection()
@@ -56,8 +59,9 @@ def save_prediction(application, response):
                 loan_amnt, int_rate, annual_inc,
                 grade, purpose,
                 default_probability, credit_risk_score,
-                propensity_score, recommendation, threshold_used
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                propensity_score, recommendation, threshold_used,
+                rfm_recency, rfm_frequency, rfm_monetary
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
             application.loan_amnt,
             application.int_rate,
@@ -68,7 +72,10 @@ def save_prediction(application, response):
             response.credit_risk_score,
             response.propensity_score,
             response.recommendation,
-            response.threshold_used
+            response.threshold_used,
+            rfm['recency'] if rfm else None,
+            rfm['frequency'] if rfm else None,
+            rfm['monetary'] if rfm else None,
         ))
         conn.commit()
         cursor.close()

@@ -37,7 +37,14 @@ def assess(application: LoanApplication):
             timestamp=datetime.now().isoformat()
         )
 
-        save_prediction(application, response)
+        # Calculate RFM values
+        rfm = {
+            'recency': float(features[0][12]),
+            'frequency': float(application.total_acc),
+            'monetary': float(application.loan_amnt)
+        }
+
+        save_prediction(application, response, rfm)
 
         return response
 
