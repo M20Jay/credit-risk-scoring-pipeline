@@ -1,8 +1,20 @@
 # Week 5 — Credit Risk Scoring Pipeline
 
 **Author:** Martin James Ng'ang'a | [github.com/M20Jay](https://github.com/M20Jay)  
-**Status:** ⏳ Week 5 of 15 — Building Now  
+**Status:** ✅ Week 5 of 15 — Complete  
 **Stack:** XGBoost · SHAP · DVC · RFM · FastAPI · PostgreSQL · Grafana · Docker · Render
+
+---
+
+## Live API
+
+**Documentation:** https://credit-risk-scoring-pipeline.onrender.com/docs
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /health | GET | API health check |
+| /assess | POST | Credit risk + propensity scoring |
+| /segment | POST | RFM customer segment |
 
 ---
 
@@ -33,8 +45,10 @@ This API answers all three in one call — with SHAP explainability for every de
 | Day 3 | src/ modular structure + SHAP explainability | ✅ Complete |
 | Day 4 | Propensity scoring + RFM segmentation + DVC | ✅ Complete |
 | Day 5 | FastAPI — /health, /assess, /segment endpoints | ✅ Complete |
-| Day 6 | Grafana + Docker + Render deployment | ⏳ |
-| Day 7 | README complete + LinkedIn post | ⏳ |
+| Day 6 | Docker + PostgreSQL + Grafana dashboard | ✅ Complete |
+| Day 7 | Render deployment + README + LinkedIn post | ✅ Complete |
+
+---
 
 ## Day 1 Key Findings
 
@@ -48,11 +62,12 @@ This API answers all three in one call — with SHAP explainability for every de
 | New features | dti_clean · credit_history_years · loan_to_income |
 
 ---
+
 ## Day 2 Key Findings
 
 | Metric | Result |
 |--------|--------|
-| Best model | XGBoost — ROC-AUC 0.701 |
+| Best model | XGBoost — ROC-AUC 0.703 |
 | Optimal threshold | 0.183 — business driven |
 | Recall on defaulters | 65% — met requirement |
 | False negatives | 3,164 missed defaulters |
@@ -67,11 +82,10 @@ This API answers all three in one call — with SHAP explainability for every de
 | Item | Detail |
 |------|--------|
 | Structure | Modular src/ — preprocessing, features, models |
-| ADASYN | Balanced 27,149 → 135,353 minority samples |
 | SHAP | Summary and waterfall plots generated |
 | ROC-AUC | 0.703 on held-out test set |
 | Threshold | 0.183 — business driven |
-| Screenshots | confusion_matrix, shap_summary, shap_waterfall |
+| Screenshots | confusion_matrix · shap_summary · shap_waterfall |
 
 ---
 
@@ -86,6 +100,7 @@ This API answers all three in one call — with SHAP explainability for every de
 | Limitation | RFM uses proxy features — no transaction history |
 
 ---
+
 ## Day 5 Key Findings
 
 | Item | Detail |
@@ -98,6 +113,46 @@ This API answers all three in one call — with SHAP explainability for every de
 | Status | All endpoints tested and returning responses |
 
 ---
+
+## Day 6 Key Findings
+
+| Item | Detail |
+|------|--------|
+| Docker | API + PostgreSQL + Grafana — all containerised |
+| PostgreSQL | Stores every prediction — loan_amnt, grade, default_prob, RFM |
+| Grafana | 6 panels — total predictions, decline rate, approve vs decline, avg default prob, avg loan amount, time series |
+| RFM Storage | rfm_recency · rfm_frequency · rfm_monetary stored per prediction |
+| Screenshots | grafana_dashboard_full · grafana_piechart |
+
+---
+
+## Day 7 Key Findings
+
+| Item | Detail |
+|------|--------|
+| Deployment | Render — Docker runtime |
+| Live URL | https://credit-risk-scoring-pipeline.onrender.com/docs |
+| Health check | /health returning 200 OK live |
+| Assess endpoint | /assess returning predictions live |
+| Threshold | 0.183 — consistent local and production |
+
+---
+
+## Sample API Response
+
+```json
+{
+  "default_probability": 0.207,
+  "credit_risk_score": 79.3,
+  "propensity_score": 0.793,
+  "recommendation": "Decline",
+  "threshold_used": 0.183,
+  "timestamp": "2026-05-04T16:25:14.285297"
+}
+```
+
+---
+
 ## Stack
 
 | Tool | Purpose |
@@ -108,9 +163,9 @@ This API answers all three in one call — with SHAP explainability for every de
 | RFM | Customer segmentation — Recency, Frequency, Monetary |
 | FastAPI | Serves all three models in one API call |
 | PostgreSQL | Stores every prediction with timestamp |
-| Grafana | Live monitoring dashboard |
-| Docker | Containerisation |
-| Render | Deployment |
+| Grafana | Live monitoring dashboard — 6 panels |
+| Docker | Containerisation — API + PostgreSQL + Grafana |
+| Render | Deployment — live production URL |
 
 ---
 
@@ -119,6 +174,25 @@ This API answers all three in one call — with SHAP explainability for every de
 Regulators require banks to explain every loan decision.  
 Feature importance tells you what matters globally.  
 SHAP tells you **why this specific customer was declined**.
+
+---
+
+## Project Structure
+credit-risk-scoring-pipeline/
+├── api/
+│   ├── main.py
+│   ├── utils.py
+│   ├── routes/ (health, assess, segment)
+│   └── schemas/ (request, response)
+├── src/
+│   ├── data/ (preprocessing, database)
+│   ├── features/ (feature_engineering)
+│   └── models/ (train, evaluate)
+├── configs/model.yaml
+├── models/ (pkl artifacts)
+├── screenshots/ (SHAP + Grafana)
+├── Dockerfile
+└── docker-compose.yml
 
 ---
 
