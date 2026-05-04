@@ -7,6 +7,7 @@ from datetime import datetime
 from api.schemas.request import LoanApplication
 from api.schemas.response import AssessResponse
 from api.utils import engineer_features
+from src.data.database import save_prediction
 
 router = APIRouter()
 
@@ -25,7 +26,7 @@ def assess(application: LoanApplication):
             else "Approve"
         )
 
-        return AssessResponse(
+        response = AssessResponse(
             default_probability=round(float(default_prob), 3),
             credit_risk_score=round(
                 (1 - float(default_prob)) * 100, 1
@@ -35,6 +36,10 @@ def assess(application: LoanApplication):
             threshold_used=round(float(threshold), 3),
             timestamp=datetime.now().isoformat()
         )
+
+        save_prediction(application, response)
+
+        return response
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
