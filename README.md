@@ -176,21 +176,10 @@ Feature importance tells you what matters globally.
 SHAP tells you **why this specific customer was declined**.
 
 ---
+
 ## Project Structure
 
-| Folder/File | Purpose |
-|-------------|---------|
-| api/routes/ | FastAPI endpoints — health, assess, segment |
-| api/schemas/ | Request and response Pydantic models |
-| api/utils.py | Shared feature engineering |
-| src/data/ | Preprocessing and PostgreSQL connection |
-| src/features/ | Feature engineering and RFM |
-| src/models/ | Training and evaluation pipelines |
-| configs/model.yaml | All hyperparameters in one place |
-| models/ | Saved artifacts — pkl files |
-| screenshots/ | SHAP plots and Grafana dashboard |
-| Dockerfile | Container definition |
-| docker-compose.yml | API + PostgreSQL + Grafana |
+![Project Structure](screenshots/project_structure.png)
 
 ---
 

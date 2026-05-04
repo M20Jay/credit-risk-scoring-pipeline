@@ -4,7 +4,6 @@ __pycache__/
 .DS_Store
 *.zip
 *.csv
-*.pkl
 *.env
 venv/
 *.ipynb_checkpoints
