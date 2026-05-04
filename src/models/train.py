@@ -1,9 +1,9 @@
 # src/models/train.py
 # Trains credit risk model
 # Applies ADASYN, calibration, threshold selection
+
 import pandas as pd
 import numpy as np
-import yaml
 import os
 import joblib
 from sklearn.model_selection import train_test_split
@@ -13,14 +13,13 @@ from imblearn.over_sampling import ADASYN
 import xgboost as xgb
 from sklearn.impute import SimpleImputer
 from src.data.preprocessing import load_config, preprocess
-from sklearn.impute import SimpleImputer
 from src.features.feature_engineering import (
     build_features, get_feature_columns,
     build_rfm_features, assign_rfm_segment
 )
 
-# Main training function
-def split_data(df, features,config):
+
+def split_data(df, features, config):
     """Three way split — train, val, test"""
     X = df[features]
     y = df[config['features']['target']]
@@ -44,6 +43,7 @@ def split_data(df, features,config):
     print(f"Test:  {X_test.shape}")
     return X_train, X_val, X_test, y_train, y_val, y_test
 
+
 def apply_adasyn(X_train, y_train):
     """Apply ADASYN on training set only"""
     imputer = SimpleImputer(strategy='median')
@@ -59,7 +59,6 @@ def apply_adasyn(X_train, y_train):
     return X_resampled, y_resampled, imputer
 
 
-# Model training and saving functions
 def train_model(X_train, y_train, config):
     """Train XGBoost model"""
     params = config['model']['params']
@@ -68,10 +67,16 @@ def train_model(X_train, y_train, config):
     print("Model trained ✅")
     return model
 
+
 def calibrate_model(model, X_val, y_val):
-    """Return model directly — calibration skipped for compatibility"""
+    """Calibrate probabilities on validation set"""
+    calibrated = CalibratedClassifierCV(
+        model, cv=None, method='isotonic'
+    )
+    calibrated.fit(X_val, y_val)
     print("Model calibrated ✅")
-    return model
+    return calibrated
+
 
 def find_threshold(model, X_test, y_test, config):
     """Find optimal threshold scientifically"""
@@ -86,6 +91,7 @@ def find_threshold(model, X_test, y_test, config):
     print(f"Optimal threshold: {optimal_threshold.round(3)}")
     return optimal_threshold
 
+
 def save_artifacts(model, threshold, imputer, config, feature_names):
     """Save all artifacts"""
     os.makedirs('models', exist_ok=True)
@@ -98,6 +104,7 @@ def save_artifacts(model, threshold, imputer, config, feature_names):
     print("Imputer saved ✅")
     print("Feature names saved ✅")
 
+
 def compute_propensity(model, X, imputer):
     """
     Compute propensity score for each customer.
@@ -109,6 +116,7 @@ def compute_propensity(model, X, imputer):
     default_prob = model.predict_proba(X_imputed)[:, 1]
     propensity_score = 1 - default_prob
     return propensity_score
+
 
 def train_pipeline():
     """Full training pipeline"""
