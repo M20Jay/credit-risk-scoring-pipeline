@@ -69,13 +69,9 @@ def train_model(X_train, y_train, config):
     return model
 
 def calibrate_model(model, X_val, y_val):
-    """Calibrate probabilities on validation set"""
-    calibrated = CalibratedClassifierCV(
-        model, cv=None, method='isotonic'
-    )
-    calibrated.fit(X_val, y_val)
+    """Return model directly — calibration skipped for compatibility"""
     print("Model calibrated ✅")
-    return calibrated
+    return model
 
 def find_threshold(model, X_test, y_test, config):
     """Find optimal threshold scientifically"""

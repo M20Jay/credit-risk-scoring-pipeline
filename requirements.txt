@@ -3,12 +3,11 @@ uvicorn
 pandas
 numpy
 scikit-learn
-xgboost
-shap
+xgboost==2.0.3
+shap==0.45.0
 imbalanced-learn
 joblib
 pydantic
 pyyaml
-dvc
 psycopg2-binary
 python-dotenv

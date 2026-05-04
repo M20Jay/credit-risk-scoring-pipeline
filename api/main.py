@@ -15,7 +15,7 @@ feature_names = joblib.load('models/feature_names.pkl')
 # Create FastAPI app
 app = FastAPI(
     title="Credit Risk Scoring API",
-    description="Scores loan applicants on credit risk, propensity and RFM segment",
+    description="Scores loan applicants on credit risk, propensity and RFM segment.Built by Martin James — MLOps Engineer.",
     version="1.0.0"
 )
 
