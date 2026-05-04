@@ -176,23 +176,21 @@ Feature importance tells you what matters globally.
 SHAP tells you **why this specific customer was declined**.
 
 ---
-
 ## Project Structure
-credit-risk-scoring-pipeline/
-├── api/
-│   ├── main.py
-│   ├── utils.py
-│   ├── routes/ (health, assess, segment)
-│   └── schemas/ (request, response)
-├── src/
-│   ├── data/ (preprocessing, database)
-│   ├── features/ (feature_engineering)
-│   └── models/ (train, evaluate)
-├── configs/model.yaml
-├── models/ (pkl artifacts)
-├── screenshots/ (SHAP + Grafana)
-├── Dockerfile
-└── docker-compose.yml
+
+| Folder/File | Purpose |
+|-------------|---------|
+| api/routes/ | FastAPI endpoints — health, assess, segment |
+| api/schemas/ | Request and response Pydantic models |
+| api/utils.py | Shared feature engineering |
+| src/data/ | Preprocessing and PostgreSQL connection |
+| src/features/ | Feature engineering and RFM |
+| src/models/ | Training and evaluation pipelines |
+| configs/model.yaml | All hyperparameters in one place |
+| models/ | Saved artifacts — pkl files |
+| screenshots/ | SHAP plots and Grafana dashboard |
+| Dockerfile | Container definition |
+| docker-compose.yml | API + PostgreSQL + Grafana |
 
 ---
 
