@@ -142,7 +142,6 @@ precision, recall, thresholds = precision_recall_curve(y_test, y_proba)
 # Plot and find threshold where recall >= 0.65
 ```
 
-**Interview answer:** "The default 0.5 threshold maximises accuracy but fails on imbalanced datasets. I calibrated to 0.183 to achieve 65% recall on defaulters — balancing the cost of a missed defaulter against the cost of a false rejection. That is a business decision, not a technical one."
 
 ---
 
@@ -536,21 +535,3 @@ LendingClub has one loan per customer row — no transaction history. True RFM r
 
 ---
 
-## Interview Q&A
-
-**Q: What is ROC-AUC and what does 0.703 mean?**
-A: Area Under the Receiver Operating Curve. Probability that the model ranks a random defaulter higher than a random non-defaulter. 0.703 means the model correctly ranks 70.3% of paired comparisons. A random model scores 0.5. Perfect model scores 1.0. 0.703 is competitive for credit risk on an imbalanced dataset.
-
-**Q: Why not maximise accuracy?**
-A: With 17.9% default rate, predicting "no default" for everyone gives 82.1% accuracy but 0% recall on defaulters — completely useless for a bank. I optimised for recall on the minority class with a business-calibrated threshold of 0.183.
-
-**Q: What is SHAP and why does it matter for banking?**
-A: SHapley Additive exPlanations — mathematical attribution of each feature's contribution to every individual prediction. Basel III requires that every credit decision be auditable. SHAP provides per-applicant, per-feature, directional attribution — not a summary, not an approximation. Audit-ready from day one.
-
-**Q: What is data leakage and how did you prevent it?**
-A: Data leakage is when information from the test set influences model training, giving optimistically biased performance metrics. Prevention: fit imputer and scaler only on training set, apply to test set. Apply ADASYN only on training set, never on test. Split before any preprocessing.
-
----
-
-*Week 5 of 15 · Credit Risk Scoring Pipeline · Built in Nairobi, Kenya 🇰🇪*
-*Live API: http://18.184.3.203:8005/docs · Repository: https://github.com/M20Jay/credit-risk-scoring-pipeline*
