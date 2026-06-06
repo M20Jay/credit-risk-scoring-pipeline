@@ -8,7 +8,7 @@
 
 ## Live API
 
-**Documentation:** http://18.184.3.203:8005/docs
+**Documentation:** http://52.57.213.229:8005/docs
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -131,7 +131,7 @@ This API answers all three in one call — with SHAP explainability for every de
 | Item | Detail |
 |------|--------|
 | Deployment | Render — Docker runtime |
-| Live URL | http://18.184.3.203:8005/docs |
+| Live URL | http://52.57.213.229:8005/docs |
 | Health check | /health returning 200 OK live |
 | Assess endpoint | /assess returning predictions live |
 | Threshold | 0.183 — consistent local and production |
