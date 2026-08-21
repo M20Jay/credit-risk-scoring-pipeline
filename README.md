@@ -8,7 +8,7 @@
 
 ## Live API
 
-**Documentation:** http://3.67.15.230:8005/docs
+**Documentation:** https://martin-mlops.com/credit/docs
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -28,7 +28,22 @@ A bank needs to answer three questions simultaneously for every customer:
 
 This API answers all three in one call — with SHAP explainability for every decision.
 
+
+## Where This Fits
+
+A probability-of-default score is not a lending decision. It's one input into a much larger system:
+
+- **Underwriting / policy engine** — the score combines with hard rules a credit team already set (debt-to-income caps, loan-to-value limits). The model feeds the rules engine, doesn't decide alone.
+- **Risk-based pricing engine** — the score determines the interest rate offered, not just approve/deny. This is a revenue decision, not just a risk one.
+- **Loan Origination System (LOS)** — the score plugs into the actual system bank staff use to process applications end to end.
+- **Basel III — Risk-Weighted Assets** — every loan's risk score feeds how much capital the bank must legally hold in reserve against it.
+- **Credit bureau reporting** — in Kenya, CRB. The outcome affects the applicant's future credit history everywhere else.
+- **Feedback loop** — the actual repayment outcome, months later, becomes the new label that retrains the model.
+
+This API owns the scoring stage. It's explicitly designed to hand off cleanly into the four stages above it.
+
 ---
+
 
 ## Dataset
 
@@ -131,7 +146,7 @@ This API answers all three in one call — with SHAP explainability for every de
 | Item | Detail |
 |------|--------|
 | Deployment | Render — Docker runtime |
-| Live URL | http://3.67.15.230:8005/docs |
+| Live URL | https://martin-mlops.com/credit/docs |
 | Health check | /health returning 200 OK live |
 | Assess endpoint | /assess returning predictions live |
 | Threshold | 0.183 — consistent local and production |
